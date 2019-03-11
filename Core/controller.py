@@ -73,7 +73,7 @@ def assert_active(active):
     Asserts active tasks on the current filter page
     :param active: list of tasks that are expected to be active
     """
-    active_todos = ss(xpath.ACTIVE_TODO_LIST, active)
+    active_todos = ss(xpath.ACTIVE_TODO_LIST, active).actual_texts
     assert sorted(active) == sorted(active_todos)
 
 
@@ -82,7 +82,7 @@ def assert_completed(completed):
     Asserts completed tasks on the current filter page
     :param completed: list of tasks that are expected to be in completed state
     """
-    completed_todos = ss(xpath.COMPLETED_TODO_LIST, completed)
+    completed_todos = ss(xpath.COMPLETED_TODO_LIST, completed).actual_texts
     assert sorted(completed) == sorted(completed_todos)
 
 
