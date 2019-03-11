@@ -55,40 +55,41 @@ class SmartWebElement:
 class Tasks:
     """
     Searches for elements that can be found by the given locator and waits for
-    presence of all elements with texts. Returns the actual list of found texts
-    for further assertion
+    presence of all elements with texts. Stores the actual texts and returns the
+    list of actually found web elements with given texts
     """
     def __init__(self, locator, texts):
         self.locator = locator
-        self.todo_texts = texts
+        self.expected_texts = texts
         self.wait = WebDriverWait(Core.config.driver, Core.config.TIMEOUT)
         self.web_elements = None
-        self.texts = self.finder()
+        self.actual_texts = self.finder()
 
     def __iter__(self):
-        return iter(self.texts)
+        return iter(self.web_elements)
 
     def __repr__(self):
-        return self.texts
+        return self.web_elements
 
     def __str__(self):
-        return str(self.texts)
+        return str(self.actual_texts)
 
     def __getitem__(self, item):
-        return self.texts[item]
+        return self.web_elements[item]
 
     def __len__(self):
-        return len(self.texts)
+        return len(self.web_elements)
 
     def __eq__(self, other):
-        return self.texts == other
+        return self.actual_texts == other
 
     def finder(self):
 
-        if self.todo_texts:
+        if self.expected_texts:
             try:
-                todos = self.wait.until(PresenceOfAllElementsWithExactTexts((By.XPATH, self.locator), self.todo_texts))
-                return [i.text for i in todos]
+                find_all_texts = PresenceOfAllElementsWithExactTexts
+                self.web_elements = self.wait.until(find_all_texts((By.XPATH, self.locator), self.expected_texts))
+                return [i.text for i in self.web_elements]
             except TimeoutException as e:
                 raise e
 
