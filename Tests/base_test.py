@@ -4,7 +4,7 @@ from selenium.webdriver import Firefox, Chrome
 import Core.config
 
 
-@pytest.fixture(scope='class', params=[Chrome()])
+@pytest.fixture(scope='class', params=[Chrome(), Firefox()])
 def setup(request):
     """
     Sets up Pytest within a class scope with different browsers as parameters
