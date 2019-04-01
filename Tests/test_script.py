@@ -37,5 +37,5 @@ class TestTodoMVC(BaseTest):
         clear_completed()
         assert_all_todos()
 
-    def test_performance(self):
+    def test_load(self):  # TODO
         pass
