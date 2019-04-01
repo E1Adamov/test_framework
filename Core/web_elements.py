@@ -87,6 +87,9 @@ class SmartWaitingWebElementsList:
         self.wd_wait = WebDriverWait(Core.config.driver, Core.config.TIMEOUT)
         self.default_conditions = PresenceOfAllElementsWithExactTexts
         self.web_elements = self.find(self.locator)
+    
+    def __getattr__(self, item):
+        return [getattr(element, item) for element in self.web_elements]
 
     def __iter__(self):
         return iter(self.web_elements)
